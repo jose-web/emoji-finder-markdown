@@ -1,0 +1,31 @@
+#emojis {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#emojis>.emoji {
+    border: 0.1em solid black;
+    margin: 0.5em;
+    padding: 0.5em;
+}
+
+#emojis>.emoji>img {
+    width: 2em;
+    height: 2em;
+}
+
+#emojis>.emoji>p {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: blue;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+#emojis>.emoji:hover>p {
+    display: initial;
+}
