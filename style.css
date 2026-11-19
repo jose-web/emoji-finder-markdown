@@ -1,67 +1,734 @@
+/* ---------- Theme tokens (GitHub light / dark) ---------- */
+:root,
+:root[data-theme="light"] {
+    --canvas: #ffffff;
+    --header: #f6f8fa;
+    --subtle: #f6f8fa;
+    --inset: #ffffff;
+    --fg: #1f2328;
+    --muted: #59636e;
+    --border: #d1d9e0;
+    --border-strong: #c8d1da;
+    --btn: #f6f8fa;
+    --btn-hover: #eff2f5;
+    --accent: #0969da;
+    --topic-bg: #ddf4ff;
+    --hover: #f3f5f8;
+    --success: #1a7f37;
+    --success-bg: #dafbe1;
+    --success-border: #4ac26b;
+    --danger: #d1242f;
+    --danger-bg: #ffebe9;
+    --danger-border: #ff8182;
+    --shadow: rgba(37, 41, 46, 0.2);
+    --primary: #1f883d;
+    --primary-hover: #1c8139;
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    --canvas: #0d1117;
+    --header: #010409;
+    --subtle: #151b23;
+    --inset: #0d1117;
+    --fg: #f0f6fc;
+    --muted: #9198a1;
+    --border: #3d444d;
+    --border-strong: #3d444d;
+    --btn: #212830;
+    --btn-hover: #262c36;
+    --accent: #4493f8;
+    --topic-bg: #121d2f;
+    --hover: #151b23;
+    --success: #3fb950;
+    --success-bg: #12261e;
+    --success-border: #2ea043;
+    --danger: #f85149;
+    --danger-bg: #25171c;
+    --danger-border: #da3633;
+    --shadow: rgba(1, 4, 9, 0.6);
+    --primary: #238636;
+    --primary-hover: #29903b;
+    color-scheme: dark;
+}
+
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    background-color: rgb(59, 57, 57);
+    min-height: 100vh;
+    background: var(--canvas);
+    color: var(--fg);
+    font-family: "Mona Sans", -apple-system, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
 }
 
-#up {
-    background-color: rgb(39, 37, 37);
-    position: sticky;
-    top: 0;
-    padding: 0.5em;
+[hidden] {
+    display: none !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+:focus-visible {
+    outline: 0.125rem solid var(--accent);
+    outline-offset: -0.125rem;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--header);
+    border-bottom: 0.0625rem solid var(--border);
 }
 
-#search {
-    border: 0;
-    padding: 0.5em;
-    background-color: rgb(124, 124, 124);
-    border-radius: 0.5em;
-    color: rgb(39, 37, 37);
-    font-weight: bold;
-    text-align: center;
+.logo {
+    flex: 0 0 auto;
+    color: var(--fg);
 }
 
-#search::placeholder {
-    color: rgb(66, 63, 63);
-    font-weight: bold;
-}
-
-#emojis {
+.crumbs {
+    flex: 1;
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
+    gap: 0.375rem;
+    min-width: 0;
+    font-size: 1rem;
+}
+
+.crumbs .sep {
+    color: var(--muted);
+}
+
+.crumbs strong {
+    font-weight: 600;
+}
+
+.pill {
+    padding: 0 0.4375rem;
+    border: 0.0625rem solid var(--border);
+    border-radius: 62.4375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.125rem;
+    color: var(--muted);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.5rem;
+    padding: 0 1rem;
+    font: inherit;
+    font-weight: 500;
+    color: var(--fg);
+    background: var(--btn);
+    border: 0.0625rem solid var(--border-strong);
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--btn-hover);
+}
+
+.btn svg {
+    color: var(--muted);
+}
+
+.icon-btn {
+    width: 2.5rem;
+    padding: 0;
     justify-content: center;
 }
 
-#emojis>.emoji {
-    margin: 0.5em;
-    padding: 1em;
-    background-color: rgb(83, 81, 81);
-    border-radius: 1em;
-}
-
-#emojis>.emoji>img {
-    width: 2em;
-    height: 2em;
-}
-
-#emojis>.emoji>p {
+:root[data-theme="dark"] .icon-moon,
+:root[data-theme="light"] .icon-sun {
     display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background-color: rgb(39, 37, 37);
-    width: 100%;
-    text-align: center;
-    padding: 0.5em;
-    font-size: 1.5em;
-    color: rgb(196, 196, 196);
 }
 
-#emojis>.emoji:hover>p {
-    display: initial;
+/* ---------- Layout ---------- */
+.layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.content {
+    flex: 999 1 37.5rem;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebar {
+    flex: 1 1 18.75rem;
+    min-width: 0;
+    position: sticky;
+    top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sidebar section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sidebar .about {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.0625rem solid var(--border);
+}
+
+.sidebar h2 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.sidebar .about p {
+    font-size: 1rem;
+}
+
+/* ---------- Comment composer ---------- */
+.sidebar .composer-section {
+    gap: 0.5rem;
+}
+
+.composer {
+    border: 0.0625rem solid var(--border);
+    border-radius: 0.375rem;
+    overflow: hidden;
+}
+
+.composer-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.5rem 0.5rem 0;
+    background: var(--subtle);
+    border-bottom: 0.0625rem solid var(--border);
+}
+
+.wt {
+    height: 2.25rem;
+    margin-bottom: -0.0625rem;
+    padding: 0 1rem;
+    font: inherit;
+    color: var(--muted);
+    background: transparent;
+    border: 0.0625rem solid transparent;
+    border-bottom: 0;
+    border-radius: 0.375rem 0.375rem 0 0;
+    cursor: pointer;
+}
+
+.wt.active {
+    color: var(--fg);
+    font-weight: 600;
+    background: var(--canvas);
+    border-color: var(--border);
+}
+
+.composer-body {
+    padding: 0.75rem;
+    background: var(--canvas);
+}
+
+#draft {
+    display: block;
+    width: 100%;
+    min-height: 6rem;
+    padding: 0.75rem 1rem;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--fg);
+    background: var(--inset);
+    border: 0.0625rem solid var(--border-strong);
+    border-radius: 0.375rem;
+    outline: none;
+}
+
+#draft:focus {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 0.0625rem var(--accent);
+}
+
+/* Same box as #draft (padding + border + line-height) so the text
+   doesn't jump when switching between Write and Preview. */
+#preview {
+    min-height: 6rem;
+    padding: 0.75rem 1rem;
+    border: 0.0625rem solid transparent;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+#preview .inline-emoji {
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: -0.25rem;
+}
+
+#preview .placeholder {
+    color: var(--muted);
+}
+
+.composer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0 0.75rem 0.75rem;
+    background: var(--canvas);
+}
+
+.btn-sm {
+    height: 2rem;
+    padding: 0 0.75rem;
+}
+
+.btn-primary {
+    color: #ffffff;
+    font-weight: 600;
+    background: var(--primary);
+    border-color: rgba(31, 35, 40, 0.15);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+
+.topic {
+    padding: 0 0.625rem;
+    border-radius: 62.4375rem;
+    background: var(--topic-bg);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.375rem;
+}
+
+/* ---------- Search ---------- */
+.search-row {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: -1rem -1rem 0;
+    padding: 1rem 1rem 1rem;
+    background: var(--canvas);
+}
+
+.search-box {
+    flex: 999 1 13.75rem;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    background: var(--inset);
+    border: 0.0625rem solid var(--border-strong);
+    border-radius: 0.375rem;
+    color: var(--muted);
+}
+
+.search-box:focus-within {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 0.0625rem var(--accent);
+}
+
+#search {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    color: var(--fg);
+}
+
+#search::placeholder {
+    color: var(--muted);
+}
+
+/* ---------- Results box ---------- */
+.box {
+    border: 0.0625rem solid var(--border);
+    border-radius: 0.375rem;
+    overflow: hidden;
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--subtle);
+    border-bottom: 0.0625rem solid var(--border);
+}
+
+.count-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+#count {
+    font-weight: 600;
+}
+
+#ai-badge {
+    display: none;
+}
+
+.ai-enabled #ai-badge {
+    display: inline-block;
+}
+
+.hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+#emojis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6.75rem, 1fr));
+    gap: 0.0625rem;
+    background: var(--border);
+}
+
+.emoji {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 0;
+    min-height: 6rem;
+    padding: 0.75rem 0.375rem;
+    background: var(--canvas);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.12s;
+}
+
+.emoji:hover {
+    background: var(--hover);
+}
+
+.emoji img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.emoji p {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.emoji.ai::after {
+    content: "AI";
+    position: absolute;
+    top: 0.375rem;
+    right: 0.375rem;
+    padding: 0 0.3125rem;
+    border-radius: 62.4375rem;
+    background: var(--topic-bg);
+    color: var(--accent);
+    font-size: 0.625rem;
+    font-weight: 600;
+    line-height: 1rem;
+    transition: opacity 0.12s;
+}
+
+/* Per-emoji actions: copy (left corner) / add to comment (right corner),
+   so the emoji in the middle stays visible. */
+.emoji-actions {
+    position: absolute;
+    top: 0.375rem;
+    left: 0.375rem;
+    right: 0.375rem;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.12s;
+}
+
+.emoji:hover .emoji-actions,
+.emoji:focus-within .emoji-actions {
+    opacity: 1;
+}
+
+/* The "+" button takes the AI badge's corner while the actions show. */
+.emoji.ai:hover::after,
+.emoji.ai:focus-within::after {
+    opacity: 0;
+}
+
+@media (hover: none) {
+    .emoji-actions {
+        opacity: 1;
+    }
+
+    /* Actions are always visible on touch: mark AI results by tint instead. */
+    .emoji.ai::after {
+        display: none;
+    }
+
+    .emoji.ai {
+        background: var(--subtle);
+    }
+}
+
+.emoji-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.625rem;
+    height: 1.625rem;
+    padding: 0;
+    color: var(--muted);
+    background: var(--btn);
+    border: 0.0625rem solid var(--border-strong);
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.emoji-actions button:hover {
+    color: var(--fg);
+    background: var(--btn-hover);
+}
+
+.emoji-actions button[data-action="insert"]:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.emoji.inserted {
+    background: var(--topic-bg);
+}
+
+.emoji.inserted p {
+    font-size: 0;
+}
+
+.emoji.inserted p::after {
+    content: "Added!";
+    font-size: 0.75rem;
+    color: var(--accent);
+}
+
+.emoji.copied {
+    background: var(--success-bg);
+}
+
+.emoji.copied p {
+    font-size: 0;
+}
+
+.emoji.copied p::after {
+    content: "Copied!";
+    font-size: 0.75rem;
+    color: var(--success);
+}
+
+/* Full-width rows inside the grid */
+.section-title,
+.ai-loading,
+.empty {
+    grid-column: 1 / -1;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--subtle);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.section-title svg {
+    color: var(--accent);
+}
+
+.ai-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1rem;
+    background: var(--canvas);
+    color: var(--muted);
+}
+
+.spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 0.125rem solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 3rem 1rem;
+    background: var(--canvas);
+    text-align: center;
+}
+
+.empty strong {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.empty span {
+    color: var(--muted);
+}
+
+/* ---------- Toast ---------- */
+#toast {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 26.25rem;
+    margin: 0 auto;
+    padding: 0.75rem 1rem;
+    background: var(--success-bg);
+    border: 0.0625rem solid var(--success-border);
+    border-radius: 0.375rem;
+    color: var(--fg);
+    box-shadow: 0 0.5rem 1.5rem var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.75rem);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+#toast svg {
+    flex: 0 0 auto;
+    color: var(--success);
+}
+
+#toast.error {
+    background: var(--danger-bg);
+    border-color: var(--danger-border);
+}
+
+#toast.error svg {
+    display: none;
+}
+
+#toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- Back to top ---------- */
+#to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 15;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 0.5rem 1.5rem var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.75rem);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+#to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+#to-top svg {
+    color: var(--fg);
+}
+
+/* ---------- Mobile / narrow: sidebar goes first ---------- */
+/* 59.75rem = content (37.5) + sidebar (18.75) + gap (1.5) + padding (2):
+   below it the two columns wrap into one. */
+@media (max-width: 59.75rem) {
+    .sidebar {
+        order: -1;
+        position: static;
+    }
+
+    /* Keep the toast clear of the floating button. */
+    #toast {
+        bottom: 5rem;
+    }
+}
+
+@media (max-width: 30rem) {
+    #emojis {
+        grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+    }
 }
