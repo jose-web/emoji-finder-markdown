@@ -138,7 +138,18 @@
         <span id="toast-text"></span>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Classic scripts sharing the global scope (works when opened as file://).
+         Order matters only for main.js, which must load last. -->
+    <script src="js/utils.js"></script>
+    <script src="js/emojis.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/ai-search.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/composer.js"></script>
+    <script src="js/actions.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
